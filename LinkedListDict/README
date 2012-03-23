@@ -4,3 +4,9 @@ single_ll_init and then do as you wish with it. Before your single_ll variable
 leaves scope of its function of inteded use, call single_ll_destroy on it to free
 up any memory it is associated with. Please read through single_ll.c for more in-
 depth summaries of each function.
+
+To Test:
+
+To test the dictionary, I have provided a make file that makes this easy. Simply
+type 'make' in terminal and run the executable 'testDict'. Everything 'testDict'
+tests is defined/implemented in 'test.c'.
