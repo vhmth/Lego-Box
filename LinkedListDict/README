@@ -1,0 +1,6 @@
+This is a simple dictionary that allows you to insert, remove and find objects.
+To use, create a single_ll typed variable, pass that variable (as a pointer) into
+single_ll_init and then do as you wish with it. Before your single_ll variable
+leaves scope of its function of inteded use, call single_ll_destroy on it to free
+up any memory it is associated with. Please read through single_ll.c for more in-
+depth summaries of each function.

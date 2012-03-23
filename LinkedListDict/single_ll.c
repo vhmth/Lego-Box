@@ -26,7 +26,7 @@ void single_ll_init(single_ll *l){
 
     // setting the head to NULL will serve to indicate whether
     // the linked list is empty or not
-    head = NULL;
+    l->head = NULL;
 }
 
 
@@ -38,7 +38,7 @@ void single_ll_init(single_ll *l){
  *  exists or any of the paramters are NULL.
  */
 
-int single_ll_add(single_ll *l, const void *key, const void *data){
+int single_ll_add(single_ll *l, void *key, void *data){
     // NULL-check the parameters
     if (!l || !key || !data)
         return 0;
@@ -100,7 +100,7 @@ const void *single_ll_get(single_ll *l, const void *key){
 
         // we found the son'bitch
         if (stepper->key == key)
-            return stepper->value;
+            return stepper->data;
 
         // just keep swimming
         stepper = stepper->next;
@@ -121,10 +121,10 @@ const void *single_ll_get(single_ll *l, const void *key){
  *  or the index is invalid, a NULL pointer is returned.
  */
 
-const void *single_ll_get(single_ll *l, int index){
+const void *single_ll_get_at(single_ll *l, int index){
 
     // NULL-checking param and index-checking index
-    if (!l || (index < 0) || (index >= size))
+    if (!l || (index < 0) || (index >= l->size))
         return NULL;
 
     // let's step through the list
@@ -136,7 +136,7 @@ const void *single_ll_get(single_ll *l, int index){
     }
 
     // I told you we gon' find you
-    return stepper->value;
+    return stepper->data;
 }
 
 
@@ -148,7 +148,7 @@ const void *single_ll_get(single_ll *l, int index){
  *  returned. 1 is returned upon successful removal.
  */
 
-int *single_ll_remove(single_ll *l, const void *key){
+int single_ll_remove(single_ll *l, const void *key){
 
     // NULL-check the parameters
     if (!l || !(l->head) || !key)
@@ -196,10 +196,10 @@ int *single_ll_remove(single_ll *l, const void *key){
  *  upon successful removal.
  */
 
-int *single_ll_remove(single_ll *l, int index){
+int single_ll_remove_at(single_ll *l, int index){
 
     // NULL-checking param and index-checking index
-    if (!l || (index < 0) || (index >= size))
+    if (!l || (index < 0) || (index >= l->size))
         return 0;
 
     // if the head is the key
@@ -256,7 +256,7 @@ int single_ll_empty(single_ll *l){
 
     //NULL-check the parameter
     if (!l)
-        return 0;
+        return 1;
 
     return (l->size == 0);
 }
@@ -283,9 +283,9 @@ void single_ll_print(single_ll *l){
     node_t *stepper = l->head;
     for (i = 0; i < l->size; i++){
         if (i != (l->size -1))
-            printf("(%s, %s)  ", (char *)stepper->key, (char *)stepper->value);
+            printf("(%s, %s)  ", (char *)stepper->key, (char *)stepper->data);
         else
-            printf("(%s, %s)", (char *)stepper->key, (char *)stepper->value);
+            printf("(%s, %s)\n", (char *)stepper->key, (char *)stepper->data);
 
         stepper = stepper->next;
     }

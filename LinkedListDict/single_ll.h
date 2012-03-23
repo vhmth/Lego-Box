@@ -38,11 +38,11 @@ typedef struct _single_ll {
 
 
 // Functionals.
-int single_ll_add(single_ll *l, const void *key, const void *data);
+int single_ll_add(single_ll *l, void *key, void *data);
 const void *single_ll_get(single_ll *l, const void *key);
-const void *single_ll_get(single_ll *l, int index);
+const void *single_ll_get_at(single_ll *l, int index);
 int single_ll_remove(single_ll *l, const void *key);
-int single_ll_remove(single_ll *l, int index);
+int single_ll_remove_at(single_ll *l, int index);
 int single_ll_size(single_ll *l);
 int single_ll_empty(single_ll *l);
 
