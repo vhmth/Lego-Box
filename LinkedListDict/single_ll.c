@@ -14,6 +14,7 @@
 #include "single_ll.h"
 
 
+
 /*  O(1) OPERATION
  *  --------------
  *  Initializes the single linked list with a size of 0.
@@ -112,7 +113,6 @@ const void *single_ll_get(single_ll *l, const void *key){
 
 
 
-
 /*  O(N) OPERATION
  *  --------------
  *
@@ -183,7 +183,6 @@ int single_ll_remove(single_ll *l, const void *key){
     // we couldn't find the key, return NULL
     return 0;
 }
-
 
 
 

@@ -38,8 +38,8 @@ typedef struct _bintree_t {
 
 // Functionals.
 int bintree_insert(bintree *b, const void *key, const void *value);
-int bintree_remove(bintree *b, void *key);
-int bintree_find(bintree *b, void *key);
+int bintree_remove(bintree *b, const void *key);
+void *bintree_find(bintree *b, const void *key);
 int bintree_height(bintree *b);
 
 // Utility functions.
