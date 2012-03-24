@@ -46,6 +46,7 @@ void bintree_makenode(tree_node_t *n, const void *key, const void *value){
  *  n. If n is NULL, returns -1 (a tree with no nodes). This
  *  function should only be used by this class!
  */
+
 int bintree_getrealheight(tree_node_t *n){
 
     // NULL-check the parameter
@@ -65,6 +66,74 @@ int bintree_getrealheight(tree_node_t *n){
 
 
 
+/*  O(N) OPERATION
+ *  --------------
+ *  Finds the in-order predecessor of a node. Note that the
+ *  left child of the desired node must be passed into this
+ *  function! If the parameter is NULL, it is returned. This
+ *  function should only be used by this class!
+ */
+
+tree_node_t *bintree_inorderpred(tree_node_t *n){
+
+    // if there is no right child, this is the IOP
+    if (!n || !(n->right))
+        return n;
+
+    // traverse
+    return bintree_inorderpred(n->right);
+}
+
+
+
+/*  O(N) OPERATION
+ *  --------------
+ *  Gets the parent of the child node passed in. If either
+ *  parameter is NULL or the child is the root, a NULL pointer
+ *  is returned. If no node matching child is found in the tree
+ *  b, a NULL pointer is returned. This function should only be
+ *  used by this class!
+ */
+
+tree_node_t *bintree_getparent(bintree_t *b, tree_node_t *child){
+
+    // NULL-check the parameters
+    if (!b || !child || (child == b->root))
+        return NULL;
+
+    // find that thang's pa/ma
+    tree_node_t *stepper = b->root;
+    while (stepper){
+
+        // compare the child value with this node's children's
+        // values
+
+        // the left child is child?
+        int comp = compare(child->value, stepper->value);
+        if (comp < 0 && !(stepper->left)){
+            comp = compare(child->value, stepper->left);
+            if (comp == 0)
+                return stepper;
+            stepper = stepper->left;
+        } else if (comp < 0)
+            return NULL;
+
+        // the right child is child?
+        if (comp > 0 && !(stepper->right)){
+            comp = compare(child->value, stepper->right);
+            if (comp == 0)
+                return stepper;
+            stepper = stepper->right;
+        } else if (comp > 0)
+            return NULL;
+    }
+
+    // shouldn't have been able to reach here partner
+    return NULL;
+}
+
+
+
 /*  O(1) OPERATION
  *  --------------
  *  Initializes the binary tree with a NULL root and a
@@ -74,7 +143,7 @@ int bintree_getrealheight(tree_node_t *n){
  *  nodes in this binary tree.
  */
 
-int bintree_init(bintree *b, int(*comparer)(const void *, const void *)){
+int bintree_init(bintree_t *b, int(*comparer)(const void *, const void *)){
 
     // if the root is null, this tree is empty brah
     b->root = NULL;
@@ -159,7 +228,7 @@ int bintree_insert(bintree_t *b, const void *key, const void *value){
  *  returned. Upon successful removal, a 1 is returned.
  */
 
-int bintree_remove(bintree *b, const void *key){
+int bintree_remove(bintree_t *b, const void *key){
 
     // NULL-check the parameters
     if (!b || !key)
