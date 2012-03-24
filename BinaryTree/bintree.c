@@ -321,3 +321,105 @@ int bintree_remove(bintree_t *b, const void *key){
     // we weren't able to get'em... but next time...
     return 0;
 }
+
+
+
+/*  O(N) OPERATION
+ *  --------------
+ *  Finds the node in bintree b with a key of the key parameter
+ *  passed in. If either parameter is NULL or there is no node
+ *  in b that has a key matching the parameter, this function returns
+ *  NULL. Otherwise, this function returns the value of the node with
+ *  a key matching the parameter.
+ */
+
+void *bintree_find(bintree_t *b, const void *key){
+
+    // NULL-check the parameters
+    if (!b || !key)
+        return NULL;
+
+    // let's find this son'bitch
+    tree_node_t *stepper = b->root;
+    while (stepper){
+
+        // first compare
+        int comp = compare(key, stepper->key);
+
+        // is this him?
+        if (comp == 0)
+            return stepper->value;
+
+        // traverse
+        if (comp < 0)
+            stepper = stepper->left;
+        else
+            stepper = stepper->right;
+    }
+
+    return NULL;
+}
+
+
+
+/*  O(1) OPERATION
+ *  --------------
+ *  Returns the height of the given binary tree b. If the parameter
+ *  is NULL -1 is returned (a tree with no nodes).
+ */
+
+int bintree_height(bintree_t *b){
+
+    // NULL-check the parameter
+    if (!b)
+        return -1;
+
+    return b->height;
+}
+
+
+
+/*  O(N) OPERATION
+ *  --------------
+ *  Prints out the tree in its entirety, level-by-level using
+ *  Breadth-First-Search. Each node is printed in the format
+ *  '(key, value)'. If the parameter is NULL or the tree is empty,
+ *  nothing is printed out.
+ */
+
+void bintree_print(bintree_t *b){
+
+    //NULL-check the parameter
+    if (!b || !(b->root))
+        return;
+}
+
+
+
+/*  O(N) OPERATION
+ *  --------------
+ *  Destroys the memory associated with the nodes of this binary
+ *  tree. This function does not destroy the actual key-value pointers
+ *  inserted into the tree! THIS FUNCTION SHOULD BE CALLED BEFORE
+ *  ANY BINARY TREE OBJECT LEAVES SCOPE TO AVOID MEMORY LEAKS.
+ */
+
+void bintree_destroy(bintree_t *b){
+
+    // NULL-check the parameter
+    if (!b || !(b->root))
+        return;
+
+    // searh n' destroy!!!!
+    tree_node_t *reaper = b->root;
+
+    // destroy the left subtree if it exists
+    if (reaper->left)
+        bintree_destroy(reaper->left);
+    // and the right
+    if (reaper->right)
+        bintree_destroy(reaper->right);
+
+    // destroy this node
+    free(reaper);
+}

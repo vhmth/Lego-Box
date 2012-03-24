@@ -37,14 +37,14 @@ typedef struct _bintree_t {
 } bintree_t;
 
 // Functionals.
-int bintree_insert(bintree *b, const void *key, const void *value);
-int bintree_remove(bintree *b, const void *key);
-void *bintree_find(bintree *b, const void *key);
-int bintree_height(bintree *b);
+int bintree_insert(bintree_t *b, const void *key, const void *value);
+int bintree_remove(bintree_t *b, const void *key);
+void *bintree_find(bintree_t *b, const void *key);
+int bintree_height(bintree_t *b);
 
 // Utility functions.
-void bintree_init(bintree *b, int(*comparer)(const void *, const void *));
-void bintree_print(bintree *b);
-void bintree_destroy(bintree *b);
+void bintree_init(bintree_t *b, int(*comparer)(const void *, const void *));
+void bintree_print(bintree_t *b);
+void bintree_destroy(bintree_t *b);
 
 #endif
