@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 #include "bintree.h"
+#include "../Queue/queue.h"
 
 
 
@@ -384,7 +385,8 @@ int bintree_height(bintree_t *b){
  *  Prints out the tree in its entirety, level-by-level using
  *  Breadth-First-Search. Each node is printed in the format
  *  '(key, value)'. If the parameter is NULL or the tree is empty,
- *  nothing is printed out.
+ *  nothing is printed out. THIS FUNCTION WILL ONLY WORK IF THE
+ *  KEYS AND VALUES ARE CHAR * STRINGS!
  */
 
 void bintree_print(bintree_t *b){
@@ -392,6 +394,60 @@ void bintree_print(bintree_t *b){
     //NULL-check the parameter
     if (!b || !(b->root))
         return;
+
+    // two queues to switch off levels
+    queue_t q1, q2;
+    queue_init(q1);
+    queue_init(q2);
+
+    int level = 0;
+    queue_enqueue(q1, b->root);
+    while (!queue_empty(q1) || !queue_empty(q2)){
+
+        if (!q_empty(q1))
+            printf("Level %d: ", level);
+        // the first queue needs to be emptied
+        while (!queue_empty(q1)){
+
+            // get a node
+            tree_node_t *tmp = queue_dequeue(q1);
+
+            // add its children to the other queue
+            if (tmp->left)
+                queue_enqueue(q2, tmp->left);
+            if (tmp->right)
+                queue_enqueue(q2, tmp->right);
+
+            // print this node's contents
+            if (queue_empty(q1)){
+                level++;
+                printf("(%s, %s)\n", tmp->key, tmp->value);
+            } else
+                printf("(%s, %s) ", tmp->key, tmp->value);
+        }
+
+        if (!q_empty(q2))
+            printf("Level %d: ", level);
+        // the second queue needs to be emptied
+        while (!queue_empty(q2)){
+
+            // get a node
+            tree_node_t *tmp = queue_dequeue(q2);
+
+            // add its children to the other queue
+            if (tmp->left)
+                queue_enqueue(q1, tmp->left);
+            if (tmp->right)
+                queue_enqueue(q1, tmp->right);
+
+            // print this node's contents
+            if (queue_empty(q2)){
+                level++;
+                printf("(%s, %s)\n", tmp->key, tmp->value);
+            } else
+                printf("(%s, %s) ", tmp->key, tmp->value);
+        }
+    }
 }
 
 
