@@ -10,7 +10,7 @@
 #ifndef QUEUE_T_H__
 #define QUEUE_T_H__
 
-#include "../Stack/stack.h"
+#include "stack.h"
 
 // the queue data struct
 typedef struct _queue_t {

@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "stack.h"
 #include "queue_t.h"
 
 
@@ -98,8 +99,8 @@ void *queue_front(queue_t *q){
 
 
 
-/*  O(1) OPERATION
- *  --------------
+/*  O(N) OPERATION/O(1) OPERATION AMORTIZED
+ *  ---------------------------------------
  *  Returns the item at the back of the queue (the item that was
  *  enqueued last). If the parameter is NULL or the queue is
  *  empty, a NULL pointer is returned.
@@ -111,7 +112,22 @@ void *queue_back(queue_t *q){
     if (!q || (q->size == 0))
         return NULL;
 
-    return stack_peek(&(q->in));
+    // simply peek from the in stack
+    if (stack_size(&(q->in)))
+        return stack_peek(&(q->in));
+
+    // otherwise we need to see the last item on the out stack
+    int outSize = stack_size(&(q->out));
+    int i;
+    for (i = 0; i < (outSize - 1); i++)
+        stack_push(&(q->in), stack_pop(&(q->out)));
+
+    void *item = stack_peek(&(q->out));
+
+    for (i = 0; i < (outSize - 1); i++)
+        stack_push(&(q->out), stack_pop(&(q->in)));
+
+    return item;
 }
 
 
@@ -129,7 +145,8 @@ void queue_enqueue(queue_t *q, void *item){
         return;
 
     // enqueue
-    stack_push(q, item);
+    stack_push(&(q->in), item);
+    (q->size)++;
 }
 
 
@@ -185,10 +202,10 @@ void queue_print(queue_t *q){
 
         void *tmp = queue_dequeue(q);
 
-        if (i == (q->size - 1))
-            printf("(%s) <--back", tmp);
+        if (i == q->size)
+            printf("(%s) <--back\n", (char *)tmp);
         else
-            printf("(%s), ", tmp);
+            printf("(%s), ", (char *)tmp);
 
         queue_enqueue(q, tmp);
     }
@@ -210,6 +227,6 @@ void queue_destroy(queue_t *q){
         return;
 
     // free up the stacks
-    stack_destroy(!(q->in));
-    stack_destroy(!(q->out));
+    stack_destroy(&(q->in));
+    stack_destroy(&(q->out));
 }
