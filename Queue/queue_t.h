@@ -26,7 +26,7 @@ int queue_empty(queue_t *q);
 int queue_size(queue_t *q);
 void *queue_front(queue_t *q);
 void *queue_back(queue_t *q);
-void *queue_enqueue(queue_t *q, void *item);
+void queue_enqueue(queue_t *q, void *item);
 void *queue_dequeue(queue_t *q);
 
 // Utility functions.
