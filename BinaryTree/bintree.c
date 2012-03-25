@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 #include "bintree.h"
-#include "../Queue/queue.h"
+#include "../Queue/queue_t.h"
 
 
 
@@ -144,7 +144,11 @@ tree_node_t *bintree_getparent(bintree_t *b, tree_node_t *child){
  *  nodes in this binary tree.
  */
 
-int bintree_init(bintree_t *b, int(*comparer)(const void *, const void *)){
+void bintree_init(bintree_t *b, int(*comparer)(const void *, const void *)){
+
+    // NULL-check the parameters
+    if (!b || !comparer)
+        return;
 
     // if the root is null, this tree is empty brah
     b->root = NULL;
@@ -397,51 +401,51 @@ void bintree_print(bintree_t *b){
 
     // two queues to switch off levels
     queue_t q1, q2;
-    queue_init(q1);
-    queue_init(q2);
+    queue_init(&q1);
+    queue_init(&q2);
 
     int level = 0;
-    queue_enqueue(q1, b->root);
-    while (!queue_empty(q1) || !queue_empty(q2)){
+    queue_enqueue(&q1, b->root);
+    while (!queue_empty(&q1) || !queue_empty(&q2)){
 
-        if (!q_empty(q1))
+        if (!q_empty(&q1))
             printf("Level %d: ", level);
         // the first queue needs to be emptied
-        while (!queue_empty(q1)){
+        while (!queue_empty(&q1)){
 
             // get a node
-            tree_node_t *tmp = queue_dequeue(q1);
+            tree_node_t *tmp = queue_dequeue(&q1);
 
             // add its children to the other queue
             if (tmp->left)
-                queue_enqueue(q2, tmp->left);
+                queue_enqueue(&q2, tmp->left);
             if (tmp->right)
-                queue_enqueue(q2, tmp->right);
+                queue_enqueue(&q2, tmp->right);
 
             // print this node's contents
-            if (queue_empty(q1)){
+            if (queue_empty(&q1)){
                 level++;
                 printf("(%s, %s)\n", tmp->key, tmp->value);
             } else
                 printf("(%s, %s) ", tmp->key, tmp->value);
         }
 
-        if (!q_empty(q2))
+        if (!q_empty(&q2))
             printf("Level %d: ", level);
         // the second queue needs to be emptied
-        while (!queue_empty(q2)){
+        while (!queue_empty(&q2)){
 
             // get a node
-            tree_node_t *tmp = queue_dequeue(q2);
+            tree_node_t *tmp = queue_dequeue(&q2);
 
             // add its children to the other queue
             if (tmp->left)
-                queue_enqueue(q1, tmp->left);
+                queue_enqueue(&q1, tmp->left);
             if (tmp->right)
-                queue_enqueue(q1, tmp->right);
+                queue_enqueue(&q1, tmp->right);
 
             // print this node's contents
-            if (queue_empty(q2)){
+            if (queue_empty(&q2)){
                 level++;
                 printf("(%s, %s)\n", tmp->key, tmp->value);
             } else
