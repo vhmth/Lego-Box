@@ -38,6 +38,13 @@ int main() {
     // the back of the queue
     printf("The back of the queue: %s\n", (char *)queue_back(&testQ));
 
+    // add some more items
+    queue_enqueue(&testQ, "item4");
+    queue_enqueue(&testQ, "item5");
+
+    printf("After queueing twice more:\n");
+    queue_print(&testQ);
+
     // free up the dictionary's memory
     queue_destroy(&testQ);
 
