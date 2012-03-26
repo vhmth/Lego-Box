@@ -1,0 +1,5 @@
+This is a binary tree that allows you to insert, remove and find nodes in the tree, as well as get the tree's height at any given point. To use, create a bintree_t typed variable, pass that variable (as a pointer) into bintree_init along with a pointer to a comparer function (for comparisons between tree nodes), and then do as you wish with it. Before your bintree_t variable leaves scope of its function of intended use, call bintree_destroy on it to free up any memory it is associated with. Please read through bintree.c for more in-depth summaries of each function.
+
+To Test:
+
+To test the binary tree, I have provided a make file that makes this easy. Simply type 'make' in terminal and run the executable 'testBinTree'. Everything 'testBinTree' tests is defined/implemented in 'test.c'.
