@@ -1,0 +1,5 @@
+This is a queue that allows you to enqueue, dequeue, see the front and back items and the size of the queue. To use, create a queue_t typed variable, pass that variable (as a pointer) into queue_init and then do as you wish with it. Before your queue_t variable leaves scope of its function of intended use, call queue_destroy on it to free up any memory it is associated with. Please read through queue_t.c for more in-depth summaries of each function.
+
+To Test:
+
+To test the queue, I have provided a make file that makes this easy. Simply type 'make' in terminal and run the executable 'testQueue'. Everything 'testQueue' tests is defined/implemented in 'test.c'.

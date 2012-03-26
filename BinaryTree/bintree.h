@@ -21,8 +21,8 @@ typedef struct _tree_node_t {
     void *value;
 
     // the children nodes
-    struct _node_t *left;
-    struct _node_t *right;
+    struct _tree_node_t *left;
+    struct _tree_node_t *right;
 } tree_node_t;
 
 typedef struct _bintree_t {
@@ -37,7 +37,7 @@ typedef struct _bintree_t {
 } bintree_t;
 
 // Functionals.
-int bintree_insert(bintree_t *b, const void *key, const void *value);
+int bintree_insert(bintree_t *b, void *key, void *value);
 int bintree_remove(bintree_t *b, const void *key);
 void *bintree_find(bintree_t *b, const void *key);
 int bintree_height(bintree_t *b);
