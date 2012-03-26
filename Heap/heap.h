@@ -5,7 +5,7 @@
  * Heap Data Structure
  */
 
-typedef Structure _heap{
+typedef struct _heap{
     int(*compare)(const void *, const void *);
     void** items;
     int size;
@@ -19,12 +19,9 @@ typedef Structure _heap{
  * should return 1 if the first parameter should be placed
  * "below" the second parameter.
  *
- * The first initializer will create an empty heap of default size 16.
- *
- * The second initializer will use the values in the items array
- * to build a heap.
+ * heap_init will build a heap from the values in the items array,
+ * or create an empty heap of size 16 if items is NULL
  */
-void heap_init(heap* h, int(*comparer)(const void *, const void *));
 void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items);
 
 
@@ -48,3 +45,6 @@ int heap_find(heap* h, void* val);
 int heap_size(heap* h);
 
 void heap_destroy(heap* h);
+
+
+#endif
