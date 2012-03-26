@@ -40,6 +40,19 @@ int main() {
     printf("After removing 'key 9' and 'key 0':\n");
     bintree_print(&testBT);
 
+    // remove the root
+    bintree_remove(&testBT, "key 2");
+    printf("After removing the root (key 2):\n");
+    bintree_print(&testBT);
+
+    // what's the height?
+    printf("Height of tree: %d\n", bintree_height(&testBT));
+
+    // get some values
+    printf("value of 'key 1': %s\n", (char *)bintree_find(&testBT, "key 1"));
+    printf("value of 'key 3': %s\n", (char *)bintree_find(&testBT, "key 3"));
+    printf("value of 'key 4': %s\n", (char *)bintree_find(&testBT, "key 4"));
+
     // free up the dictionary's memory
     bintree_destroy(&testBT);
 
