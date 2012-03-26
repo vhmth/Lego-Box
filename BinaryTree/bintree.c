@@ -177,7 +177,8 @@ int bintree_insert(bintree_t *b, void *key, void *value){
 
     // this is the first node being added
     if (!(b->root)){
-        bintree_makenode(b->root, key, value); 
+        b->root = (tree_node_t *)malloc(sizeof(tree_node_t));
+        bintree_makenode(b->root, key, value);
         b->height = 0;
         return 1;
     }
@@ -196,6 +197,7 @@ int bintree_insert(bintree_t *b, void *key, void *value){
 
         // add to the left child
         if (!(stepper->left) && (comp < 0)){
+            stepper->left = (tree_node_t *)malloc(sizeof(tree_node_t));
             bintree_makenode(stepper->left, key, value);
             if (currHeight == b->height)
                 (b->height)++;
@@ -204,6 +206,7 @@ int bintree_insert(bintree_t *b, void *key, void *value){
 
         // add to the right child
         if (!(stepper->right) && (comp > 0)){
+            stepper->right = (tree_node_t *)malloc(sizeof(tree_node_t));
             bintree_makenode(stepper->right, key, value);
             if (currHeight == b->height)
                 (b->height)++;

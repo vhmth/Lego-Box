@@ -21,6 +21,17 @@ int main() {
     bintree_t testBT;
     bintree_init(&testBT, &comparer);
 
+    // add some nodes
+    bintree_insert(&testBT, "key 2", "value 1");
+    bintree_insert(&testBT, "key 1", "value 2");
+    bintree_insert(&testBT, "key 3", "value 3");
+    bintree_insert(&testBT, "key 4", "value 4");
+    bintree_insert(&testBT, "key 0", "value 5");
+    bintree_insert(&testBT, "key 9", "value 6");
+
+    // print the tree
+    bintree_print(&testBT);
+
     // free up the dictionary's memory
     bintree_destroy(&testBT);
 
