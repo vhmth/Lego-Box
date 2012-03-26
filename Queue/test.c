@@ -45,7 +45,7 @@ int main() {
     printf("After queueing twice more:\n");
     queue_print(&testQ);
 
-    // free up the dictionary's memory
+    // free up the queue's memory
     queue_destroy(&testQ);
 
     return 0;

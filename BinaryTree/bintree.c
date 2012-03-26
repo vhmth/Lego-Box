@@ -22,7 +22,7 @@
  *  This function should only be used by this class!
  */
 
-void bintree_makenode(tree_node_t *n, const void *key, const void *value){
+void bintree_makenode(tree_node_t *n, void *key, void *value){
 
     // NULL-check the parameters
     if (!key || !value)
@@ -110,9 +110,9 @@ tree_node_t *bintree_getparent(bintree_t *b, tree_node_t *child){
         // values
 
         // the left child is child?
-        int comp = compare(child->value, stepper->value);
+        int comp = b->compare(child->value, stepper->value);
         if (comp < 0 && !(stepper->left)){
-            comp = compare(child->value, stepper->left);
+            comp = b->compare(child->value, stepper->left);
             if (comp == 0)
                 return stepper;
             stepper = stepper->left;
@@ -121,7 +121,7 @@ tree_node_t *bintree_getparent(bintree_t *b, tree_node_t *child){
 
         // the right child is child?
         if (comp > 0 && !(stepper->right)){
-            comp = compare(child->value, stepper->right);
+            comp = b->compare(child->value, stepper->right);
             if (comp == 0)
                 return stepper;
             stepper = stepper->right;
@@ -169,7 +169,7 @@ void bintree_init(bintree_t *b, int(*comparer)(const void *, const void *)){
  *  of the parameters are NULL, this function returns 0.
  */
 
-int bintree_insert(bintree_t *b, const void *key, const void *value){
+int bintree_insert(bintree_t *b, void *key, void *value){
 
     // NULL-check the paramters
     if (!b || !key || !value)
@@ -349,7 +349,7 @@ void *bintree_find(bintree_t *b, const void *key){
     while (stepper){
 
         // first compare
-        int comp = compare(key, stepper->key);
+        int comp = b->compare(key, stepper->key);
 
         // is this him?
         if (comp == 0)
@@ -408,7 +408,7 @@ void bintree_print(bintree_t *b){
     queue_enqueue(&q1, b->root);
     while (!queue_empty(&q1) || !queue_empty(&q2)){
 
-        if (!q_empty(&q1))
+        if (!queue_empty(&q1))
             printf("Level %d: ", level);
         // the first queue needs to be emptied
         while (!queue_empty(&q1)){
@@ -425,12 +425,12 @@ void bintree_print(bintree_t *b){
             // print this node's contents
             if (queue_empty(&q1)){
                 level++;
-                printf("(%s, %s)\n", tmp->key, tmp->value);
+                printf("(%s, %s)\n", (char *)tmp->key, (char *)tmp->value);
             } else
-                printf("(%s, %s) ", tmp->key, tmp->value);
+                printf("(%s, %s) ", (char *)tmp->key, (char *)tmp->value);
         }
 
-        if (!q_empty(&q2))
+        if (!queue_empty(&q2))
             printf("Level %d: ", level);
         // the second queue needs to be emptied
         while (!queue_empty(&q2)){
@@ -447,9 +447,9 @@ void bintree_print(bintree_t *b){
             // print this node's contents
             if (queue_empty(&q2)){
                 level++;
-                printf("(%s, %s)\n", tmp->key, tmp->value);
+                printf("(%s, %s)\n", (char *)tmp->key, (char *)tmp->value);
             } else
-                printf("(%s, %s) ", tmp->key, tmp->value);
+                printf("(%s, %s) ", (char *)tmp->key, (char *)tmp->value);
         }
     }
 }
@@ -464,22 +464,27 @@ void bintree_print(bintree_t *b){
  *  ANY BINARY TREE OBJECT LEAVES SCOPE TO AVOID MEMORY LEAKS.
  */
 
+void bintree_destroy_helper(tree_node_t *curr){
+
+    //NULL-check the parameters
+    if (!curr)
+        return;
+
+    // search n' destroy!!!!
+    if (curr->left)
+        bintree_destroy_helper(curr->left);
+    if (curr->right)
+        bintree_destroy_helper(curr->right);
+
+    // destroy the current node
+    free(curr);
+}
 void bintree_destroy(bintree_t *b){
 
     // NULL-check the parameter
     if (!b || !(b->root))
         return;
 
-    // searh n' destroy!!!!
-    tree_node_t *reaper = b->root;
-
-    // destroy the left subtree if it exists
-    if (reaper->left)
-        bintree_destroy(reaper->left);
-    // and the right
-    if (reaper->right)
-        bintree_destroy(reaper->right);
-
-    // destroy this node
-    free(reaper);
+    // call the helper
+    bintree_destroy_helper(b->root);
 }
