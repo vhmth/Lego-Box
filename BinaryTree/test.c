@@ -32,6 +32,14 @@ int main() {
     // print the tree
     bintree_print(&testBT);
 
+    // remove some nodes
+    bintree_remove(&testBT, "key 9");
+    bintree_remove(&testBT, "key 0");
+
+    // print the tree
+    printf("After removing 'key 9' and 'key 0':\n");
+    bintree_print(&testBT);
+
     // free up the dictionary's memory
     bintree_destroy(&testBT);
 
