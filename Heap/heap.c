@@ -33,8 +33,6 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items
 
 
 void* heap_peek(heap* h){
-    int mid = (h->size)/2;
-    return h->items[mid];
 }
 
 int heap_size(heap* h){

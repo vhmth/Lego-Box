@@ -37,11 +37,6 @@ void heap_insert(heap* h);
 void* heap_peek(heap* h);
 void* heap_remove(heap* h);
 
-/* heap_find returns 1 if there is a node
- * in the heap with the value val
- */
-int heap_find(heap* h, void* val);
-
 int heap_size(heap* h);
 
 void heap_destroy(heap* h);
