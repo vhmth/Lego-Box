@@ -22,7 +22,7 @@ typedef struct _dsjsets {
 
 // Functionals.
 void dsjsets_addelems(dsjsets *d, int n);
-int dsjsets_find(dsjsets *d, int x);
+int dsjsets_find(dsjsets *d, int n);
 void dsjsets_union(dsjsets *d, int a, int b);
 int dsjsets_size(dsjsets *d);
 
