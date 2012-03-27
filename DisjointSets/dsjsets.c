@@ -165,3 +165,51 @@ int dsjsets_size(dsjsets *d){
 
     return d->size;
 }
+
+
+
+/*  O(N) OPERATION
+ *  --------------
+ *  Traverses through the disjoint sets, printing their values.
+ *  A negative value signifies a root node with a tree size equal
+ *  to the magnitude of its value. A positive value signifies a
+ *  child node pointing to its parent, whose index is given by this
+ *  value. If this data structure is empty or NULL, this function
+ *  does nothing.
+ */
+
+void dsjsets_print(dsjsets *d){
+
+    // NULL and size-check the parameter
+    if (!d || !(d->dsets) || !(d->size))
+        return;
+
+    // traverse and print
+    int i;
+    for (i = 0; i < d->size; i++){
+        if (i != (d->size -1))
+            printf("set %d: %d ", i, d->dsets[i]);
+        else
+            printf("set %d: %d\n", i, d->dsets[i]);
+    }
+}
+
+
+
+/*  O(1) OPERATION
+ *  --------------
+ *  Destroys the memory associated with this disjoint sets data
+ *  structure. THIS FUNCTION SHOULD BE CALLED BEFORE ANY DISJOINT
+ *  SETS OBJECT LEAVES SCOPE TO AVOID MEMORY LEAKS.
+ */
+
+void dsjsets_destroy(dsjsets *d){
+
+    // NULL-check the parameter
+    if (!d || !(d->dsets))
+        return;
+
+    free(d->dsets);
+    d->dsets = NULL;
+    d->size = 0;
+}
