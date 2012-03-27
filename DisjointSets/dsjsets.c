@@ -67,7 +67,7 @@ void dsjsets_addelems(dsjsets *d, int n){
     }
 
     // we need to realloc
-    d->dsets = (int *)realloc(d->dsets, (n+d->size)*sizeof(int));
+    d->dsets = (int *)realloc(d->dsets, (n + d->size)*sizeof(int));
 
     // initialize new sets to -1
     int i;

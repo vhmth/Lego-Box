@@ -1,6 +1,6 @@
 /*
- * Tests the queue data structure implemented in queue_t.h
- * and queue_t.c.
+ * Tests the binary tree data structure implemented in
+ * bintree.h and bintree.c.
  */
 
 
