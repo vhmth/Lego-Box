@@ -3,6 +3,7 @@
  *  Author: Vinay Hiremath
  *          vhiremath4@gmail.com
  *          www.vhmath.com
+ *
  *  Description: Header file for a disjoint-sets data structure.
  */
 
@@ -20,10 +21,10 @@ typedef struct _dsjsets {
 } dsjsets;
 
 // Functionals.
-void dsjsets_addelems(const int n);
-int dsjsets_find(const int x);
-void dsjsets_union(int a, int b);
-int dsjsets_size();
+void dsjsets_addelems(dsjsets *d, int n);
+int dsjsets_find(dsjsets *d, int x);
+void dsjsets_union(dsjsets *d, int a, int b);
+int dsjsets_size(dsjsets *d);
 
 // Utility functions.
 void dsjsets_init(dsjsets *d);
