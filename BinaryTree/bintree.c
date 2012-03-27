@@ -110,9 +110,9 @@ tree_node_t *bintree_getparent(bintree_t *b, tree_node_t *child){
         // values
 
         // the left child is child?
-        int comp = b->compare(child->value, stepper->value);
-        if (comp < 0 && !(stepper->left)){
-            comp = b->compare(child->value, stepper->left);
+        int comp = b->compare(child->key, stepper->key);
+        if (comp < 0 && stepper->left){
+            comp = b->compare(child->key, stepper->left->key);
             if (comp == 0)
                 return stepper;
             stepper = stepper->left;
@@ -120,8 +120,8 @@ tree_node_t *bintree_getparent(bintree_t *b, tree_node_t *child){
             return NULL;
 
         // the right child is child?
-        if (comp > 0 && !(stepper->right)){
-            comp = b->compare(child->value, stepper->right);
+        if (comp > 0 && stepper->right){
+            comp = b->compare(child->key, stepper->right->key);
             if (comp == 0)
                 return stepper;
             stepper = stepper->right;
