@@ -53,7 +53,7 @@ int main() {
     printf("value of 'key 3': %s\n", (char *)bintree_find(&testBT, "key 3"));
     printf("value of 'key 4': %s\n", (char *)bintree_find(&testBT, "key 4"));
 
-    // free up the dictionary's memory
+    // free up the binary tree's memory
     bintree_destroy(&testBT);
 
     return 0;
