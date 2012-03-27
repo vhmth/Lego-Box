@@ -16,8 +16,10 @@ typedef struct _heap{
  * Initializers:
  * The heap requires a comparer function to determine
  * how elements are placed in the heap. The comparer function 
- * should return 1 if the first parameter should be placed
- * "below" the second parameter.
+ * should return 1 if the second parameter should be placed
+ * "below" the first parameter.
+ *
+ * i.e. comparer(2, 5) would return 1 if we want a minheap of integers
  *
  * heap_init will build a heap from the values in the items array,
  * or create an empty heap of size 16 if items is NULL
