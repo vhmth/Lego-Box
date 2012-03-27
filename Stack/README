@@ -1,0 +1,5 @@
+This stack follows a typical stack implementation. You may push items onto the stack, and you can access only the top item on the stack at any given time (last in, first out). There is also a stack_size function which returns the number of items on the stack.
+
+To initialize a stack, declare a variable of type 'stack' and pass it by pointer into the stack_init function. This initializes an empty stack with an initial capacity of size 16. You do not have to worry about the capacity of your stack, because it will be resized accordingly as you push items onto it.
+
+Don't forget to call stack_destroy when you are done with your stack. This will deallocate any memory the stack has allocated.

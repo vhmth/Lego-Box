@@ -9,7 +9,7 @@ void heapify_up(heap* h, int index){
 
 void heapify_down(heap* h, int index){
     
-    // find the indices of this node's children
+    // find the indices of the current node's children
     unsigned int left_index = 2*index + 1;
     unsigned int right_index = 2*index + 1;
     
@@ -17,10 +17,12 @@ void heapify_down(heap* h, int index){
     int has_left = left_index < h->size;
     int has_right  = right_index < h->size;
     
-    // if this is a leaf, we're done
+    // if we're at a leaf, we're done :-)
     if(!has_left && !has_right) 
         return;
     
+    // get values of the parent, left, and right nodes
+    // so we can compare them
     void* parent = h->items[index];
     void* left = h->items[left_index];
     void* right = h->items[right_index];
@@ -33,10 +35,11 @@ void heapify_down(heap* h, int index){
     }
 }
 
-// Restore the heap properties for h
+// Build a heap using the items array
 void build_heap(heap* h){
     
 }
+
 void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items){
     
     // Set the compare function
