@@ -1,0 +1,5 @@
+This heap allows you to insert items, view or remove at the root, and check the heap's size.
+
+To make comparisons between items, the heap requires that a comparer function be passed into the initializer. Your compare function should return 1 if the SECOND parameter should be placed BELOW the FIRST parameter, and 0 otherwise. For example, if you wanted to create a Min-heap of integers, compare(2, 5) should return 1. In a Min-heap we want parents nodes' values to be less than their children's, and this is consistent with our compare function definition. Make sure your compare function works for the kind of heap you want, and for the type of parameters that you plan to pass into it.
+
+Remember to call heap_destroy when you are done with your heap, so that any memory the heap allocated will be freed up.

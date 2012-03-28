@@ -2,6 +2,10 @@
 #include <stdlib.h>
 
 
+void swap_positions(int pos1, int pos2){
+    
+}
+
 void heapify_up(heap* h, int index){
     
     
@@ -9,7 +13,7 @@ void heapify_up(heap* h, int index){
 
 void heapify_down(heap* h, int index){
     
-    // find the indices of this node's children
+    // find the indices of the current node's children
     unsigned int left_index = 2*index + 1;
     unsigned int right_index = 2*index + 1;
     
@@ -17,10 +21,12 @@ void heapify_down(heap* h, int index){
     int has_left = left_index < h->size;
     int has_right  = right_index < h->size;
     
-    // if this is a leaf, we're done
+    // if we're at a leaf, we're done :-)
     if(!has_left && !has_right) 
         return;
     
+    // get values of the parent, left, and right nodes
+    // so we can compare them
     void* parent = h->items[index];
     void* left = h->items[left_index];
     void* right = h->items[right_index];
@@ -31,12 +37,41 @@ void heapify_down(heap* h, int index){
        && has_right && h->compare(parent, right)){
         return;
     }
+    
+    // If there are 2 children, swap the parent with one of the children
+    if(has_left && has_right){
+        
+        // if the left child should be placed above the right child
+        // swap the left child with the parent
+        if(h->compare(left, right)){
+            swap_positions(index, left_index);
+            heapify_down(h, left_index);
+        }
+        
+        // otherwise, swap the parent with the right child
+        else{
+            swap_positions(index, right_index);
+            heapify_down(h, right_index);
+        }
+    }
+    
+    else if(has_left){
+        
+        // If the left child should be placed above
+        // the parent, swap them
+        if(h->compare(left, parent)){
+            swap_positions(index, left_index);
+            heapify_down(h, left_index);
+        }
+    }
+    
 }
 
-// Restore the heap properties for h
+// Build a heap using the items array
 void build_heap(heap* h){
     
 }
+
 void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items){
     
     // Set the compare function
@@ -46,22 +81,28 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items
     h->size = 0;
     h->capacity = 16;
     
-    // Allocate memory for the items array
     if(items != NULL) {
-        // find size of items parameter
-        //h->capacity = ?
-        //h->size = ?        
+        // create a heap using the items array      
         h->items = items;
     }
+    
     else {
-        // create a heap using the items array
+        
+        // Allocate memory for the items array
         h->items = malloc(h->capacity * sizeof(void*));
+        
+        // Our heap is empty, so make each entry in the items array
+        // equal to NULL, rather than garbage data
+        int i;
+        for(i=0; i < h->capacity; i++){
+            h->items[i] = NULL;
+        }
     }
 }
 
 
 void* heap_peek(heap* h){
-    return NULL;
+    return h->items[0];
 }
 
 int heap_size(heap* h){
