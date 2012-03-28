@@ -7,7 +7,8 @@
  * http://www.azillionmonkeys.com/qed/hash.html
  */
 
-#include "pstdint.h"
+#include <stdint.h>
+#include <stdlib.h>
 
 #undef get16bits
 #if (defined(__GNUC__) && defined(__i386__)) || defined(__WATCOMC__) \
