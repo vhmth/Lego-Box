@@ -188,9 +188,9 @@ void dsjsets_print(dsjsets *d){
     int i;
     for (i = 0; i < d->size; i++){
         if (i != (d->size -1))
-            printf("set %d: %d ", i, d->dsets[i]);
+            printf("(set %d: %d) ", i, d->dsets[i]);
         else
-            printf("set %d: %d\n", i, d->dsets[i]);
+            printf("(set %d: %d)\n", i, d->dsets[i]);
     }
 }
 
