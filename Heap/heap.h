@@ -24,7 +24,7 @@ typedef struct _heap{
  * heap_init will build a heap from the values in the items array,
  * or create an empty heap of size 16 if items is NULL
  */
-void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items);
+void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items, int item_count);
 
 
 void heap_insert(heap* h);
@@ -42,6 +42,11 @@ void* heap_remove(heap* h);
 int heap_size(heap* h);
 
 void heap_destroy(heap* h);
+
+/* Prints the values of the heap in level order
+ * Assuming the values are ints
+ */
+void heap_print(heap* h);
 
 
 #endif

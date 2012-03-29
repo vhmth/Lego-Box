@@ -1,5 +1,6 @@
 #include "heap.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 
 void swap_positions(int pos1, int pos2){
@@ -69,10 +70,13 @@ void heapify_down(heap* h, int index){
 
 // Build a heap using the items array
 void build_heap(heap* h){
-    
+    int i;
+    for(i=0; i < h->size; i++){
+        heapify_down(h, i);
+    }
 }
 
-void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items){
+void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items, int item_count){
     
     // Set the compare function
     h->compare = comparer;
@@ -82,8 +86,10 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items
     h->capacity = 16;
     
     if(items != NULL) {
-        // create a heap using the items array      
+        // create a heap using the items array 
+        h->size = item_count;
         h->items = items;
+        build_heap(h);
     }
     
     else {
@@ -111,4 +117,13 @@ int heap_size(heap* h){
 
 void heap_destroy(heap* h){
     free(h->items);
+}
+
+void heap_print(heap* h){
+    int i;
+    for(i=0; i < h->size; i++){
+        printf("%d   ", *(int*)h->items[i]);
+        if(i == 0 || i == 2 || i == 6 || i == 14) printf("\n");
+    }
+    printf("\n");
 }
