@@ -14,48 +14,6 @@
 
 
 
-/*  O(N) OPERATION
- *  --------------
- *  Doubles the capacity of the table and then re-hashes
- *  all the items in the hash table. This function is
- *  called when the load factor of the table reaches 0.7.
- *  This function should only be used by this class!
- */
-
-void hashtable_resize(hashtable_t *h){
-
-    // NULL-check the parameter
-    if (!h)
-        return;
-
-    // otherwise get all the items
-    int size = h->numItems;
-    char *keys[size];
-    void *values[size];
-    int i;
-    int j;
-    j = 0;
-    for (i = 0; i < h->capacity; i++){
-        // an item was found
-        if (h->table[i]){
-            // traverse this list, adding items
-            node_t *stepper = h->table[i];
-            while (stepper){
-                keys[j] = stepper->key;
-                values[j] = stepper->value;
-                j++;
-
-                // traverse
-                stepper = stepper->next;
-            }
-        }
-    }
-
-    // free up the current table
-}
-
-
-
 /*  O(1) OPERATION
  *  --------------
  *  Initializes the hash table with a capacity of 32. The
