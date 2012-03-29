@@ -138,8 +138,8 @@ void hashtable_insert(hashtable_t *h, char *key, void *value){
 
 
 
-/*  O(1) OPERATION
- *  --------------
+/*  O(N) OPERATION/O(1) AVERAGE OPERATION
+ *  -------------------------------------
  *  Finds the void pointer value associated with the key
  *  parameter and returns it. If either of the parameters
  *  are NULL, this function returns a NULL-pointer. If the
@@ -169,4 +169,61 @@ void *hashtable_find(hashtable_t *h, char *key){
 
     // couldn't find the key in this table
     return NULL;
+}
+
+
+
+/*  O(N) OPERATION/O(1 + N/k) AVERAGE OPERATION
+ *  -------------------------------------------
+ *  Removes the node that contains the same key as that of the
+ *  key parameter. If either parameter is NULL or no nodes in
+ *  the table have the same key, this funciton does nothing.
+ */
+
+void hashtable_remove(hashtable_t *h, char *key){
+
+    // NULL-check the parameters
+    if (!h || !(h->table) || !key)
+        return;
+
+    // get the index from the hash function
+    unsigned int index = SuperFastHash(key, h->capacity) % h->capacity;
+
+    // find the value
+    node_t *stepper = h->table[index];
+
+    // if it's the first item
+    if (!strcmp(stepper->key, key)){
+        h->table[index] = stepper->next;
+
+        // free this node
+        free(stepper);
+
+        // update the number of items
+        (h->numItems)--;
+    } else {
+        // if it's an item further in the list
+        while(stepper->next){
+            // if this is the node, remove a node
+            if (!strcmp(stepper->next->key, key)){
+                node_t *tmp = stepper->next;
+
+                stepper->next = stepper->next->next;
+
+                // free the next node
+                free(stepper->next);
+
+                // update the number of items
+                (h->numItems)--;
+
+                break;
+            }
+
+            // traverse
+            stepper = stepper->next;
+        }
+    }
+
+    // update the load factor
+    h->alpha = (float)h->numItems/(h->capacity);
 }
