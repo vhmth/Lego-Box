@@ -1,0 +1,5 @@
+This is a disjoint-sets data structure that allows you to add, union and find sets as well as get the number of sets in the forest at any given time and print out the sets and their values. To use, create a dsjsets typed variable, pass that variable (as a pointer) into dsjsets_init and then do as you wish with it. Before your dsjsets variable leaves scope of its function of intended use, call dsjsets_destroy on it to free up any memory it is associated with. Please read through dsjsets.c for more in-depth summaries of each function.
+
+To Test:
+
+To test the disjoint sets data structure, I have provided a make file that makes this easy. Simply type 'make' in terminal and run the executable 'testDsets'. Everything 'testDsets' tests is defined/implemented in 'test.c'.

@@ -12,7 +12,6 @@
 
 // the disjoint-sets struct
 typedef struct _dsjsets {
-
     // the array that will contain all the sets
     int *dsets;
 
