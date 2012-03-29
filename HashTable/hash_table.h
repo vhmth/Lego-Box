@@ -25,6 +25,9 @@ typedef struct _node_t {
 typedef struct _hashtable_t {
     // the maximum load factor
     // defaults to 0.7 with init
+    float MAX_ALPHA;
+
+    // the current load factor
     float alpha;
 
     // the capacity of this table (number
@@ -35,7 +38,7 @@ typedef struct _hashtable_t {
     int numItems;
 
     // the table of linked lists
-    node_t *table;
+    node_t **table;
 } hashtable_t;
 
 // Functionals.
