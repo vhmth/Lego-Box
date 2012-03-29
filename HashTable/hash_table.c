@@ -227,3 +227,123 @@ void hashtable_remove(hashtable_t *h, char *key){
     // update the load factor
     h->alpha = (float)h->numItems/(h->capacity);
 }
+
+
+
+/*  O(N) OPERATION)
+ *  ---------------
+ *  Free up memory associated with this hash table. THIS DOES NOT
+ *  FREE THE KEY-VALUE POINTERS PASSED INTO THE HASH TABLE! This
+ *  function should be called before any hashtable_t object leaves
+ *  scope to ensure no memory leaks occur!
+ */
+
+void hashtable_destroy(hashtable_t *h){
+
+    // NULL-check the parameter
+    if (!h || !(h->table))
+        return;
+
+    // free all the nodes
+    node_t *stepper;
+    int i;
+    for (i = 0; i < h->capacity; i++){
+        // set stepper
+        stepper = h->table[i];
+
+        // if there is a list, free it
+        while(stepper){
+            node_t *tmp = stepper->next;
+
+            // free this node
+            free(stepper);
+
+            // traverse
+            stepper = tmp;
+        }
+
+        h->table[i] = NULL;
+    }
+
+    // free the table itself
+    free(h->table);
+    h->table = NULL;
+
+    // reset the table size
+    h->alpha = 0;
+    h->numItems = 0;
+    h->capacity = 0;
+}
+
+
+
+/*  O(N) OPERATION
+ *  --------------
+ *  Clears all the items from this hash table. If the parameter is
+ *  NULL or empty, this function does nothing.
+ */
+
+void hashtable_clear(hashtable_t *h){
+
+    // NULL-check the parameter and check
+    // the table size
+    if (!h || !(h->table) || !(h->numItems))
+        return;
+
+    // destroy this hash table
+    hashtable_destroy(h);
+
+    // initialize it once more
+    hashtable_init(h);
+}
+
+
+
+/*  O(1) OPERATION
+ *  --------------
+ *  Returns the actual capacity of this hash table. If the parameter
+ *  is NULL, this function returns 0 (empty).
+ */
+
+int hashtable_size(hashtable_t *h){
+
+    // NULL-check the parameter
+    if (!h)
+        return 0;
+
+    return h->capacity;
+}
+
+
+
+/*  O(1) OPERATION
+ *  --------------
+ *  Returns the number of items in this hash table. If the parameter
+ *  is NULL, this function returns 0 (empty).
+ */
+
+int hashtable_numelems(hashtable_t *h){
+
+    // NULL-check the parameter
+    if (!h)
+        return 0;
+
+    return h->numItems;
+}
+
+
+
+/*  O(1) OPERATION
+ *  --------------
+ *  Returns the alpha load factor for this hash table. If the parameter
+ *  is NULL, this function returns 0 (empty).
+ */
+
+float hashtable_loadfactor(hashtable_t *h){
+
+    // NULL-check the parameter
+    if (!h)
+        return 0;
+
+    return h->alpha;
+}
