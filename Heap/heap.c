@@ -73,7 +73,7 @@ void heapify_down(heap* h, int index){
 // Build a heap using the items array
 void build_heap(heap* h){
     int i;
-    for(i=h->size-1; i >= 0; i--){
+    for(i=h->size/2; i >= 0; i--){
         heapify_down(h, i);
     }
 }
@@ -137,5 +137,6 @@ void heap_print(heap* h){
             node_at = 0;
         }
     }
+    if(node_at != 0) printf("\n");
     printf("\n");
 }
