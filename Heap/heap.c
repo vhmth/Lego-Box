@@ -134,6 +134,26 @@ void* heap_peek(heap* h){
     return h->items[0];
 }
 
+void* heap_remove(heap* h){
+    
+    // if there's nothing in the heap, return NULL
+    if(h->size == 0) return NULL;
+    
+    // get a pointer to the top item and decrement size
+    void* top = h->items[0];
+    h->size--;
+    
+    // if there's more stuff in our heap, place the last
+    // item in the root, and sift it down to preserve
+    // the heap properties
+    if(h->size > 0){
+        h->items[0] = h->items[h->size];
+        heapify_down(h, 0);
+    }
+    
+    return top;
+}
+
 int heap_size(heap* h){
     return h->size;
 }
