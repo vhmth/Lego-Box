@@ -44,7 +44,7 @@ int heap_size(heap* h);
 void heap_destroy(heap* h);
 
 /* Prints the values of the heap in level order
- * Assuming the values are ints
+ * Should only be called for heaps of ints
  */
 void heap_print(heap* h);
 
