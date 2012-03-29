@@ -72,13 +72,16 @@ void heapify_down(heap* h, int index){
 
 // Build a heap using the items array
 void build_heap(heap* h){
+    
+    // going from the bottom up, sift
+    // down nodes to their proper positions
     int i;
     for(i=h->size/2; i >= 0; i--){
         heapify_down(h, i);
     }
 }
 
-void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items, int item_count){
+void heap_init(heap* h, int(*comparer)(const void *, const void *)){
     
     // Set the compare function
     h->compare = comparer;
@@ -87,24 +90,42 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items
     h->size = 0;
     h->capacity = 16;
     
-    if(items != NULL) {
-        // create a heap using the items array 
-        h->size = item_count;
-        h->items = items;
-        build_heap(h);
-    }
+    // Allocate memory for the items array
+    h->items = malloc(h->capacity * sizeof(void*));
     
-    else {
+    // Our heap is empty, so make each entry in the items array
+    // equal to NULL, rather than garbage data
+    int i;
+    for(i=0; i < h->capacity; i++){
+        h->items[i] = NULL;
+    }
+}
+
+void heap_init_with_items(heap* h, int(*compare)(const void *, const void *), void** items, int item_count){
+    
+    // Set the compare function
+    h->compare = compare;
+    
+    // Give size and capacity valid values
+    h->size = item_count;
+    h->capacity = 16;
+    
+    // make sure we have enough space for all the items
+    while(h->capacity < item_count) h->capacity*=2;
+    
+    // verify that a non-NULL array was passed in
+    if(items != NULL) {
         
-        // Allocate memory for the items array
-        h->items = malloc(h->capacity * sizeof(void*));
-        
-        // Our heap is empty, so make each entry in the items array
-        // equal to NULL, rather than garbage data
+        // Copy the values from items parameter.
+        // We want our own dynamic array to tinker with
+        // so we can leave the users' original array intact
+        h->items = malloc( h->capacity * sizeof(void*));
         int i;
-        for(i=0; i < h->capacity; i++){
-            h->items[i] = NULL;
+        for(i=0; i < item_count; i++){
+            h->items[i] = items[i];
         }
+        
+        build_heap(h);
     }
 }
 

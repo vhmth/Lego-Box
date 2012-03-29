@@ -21,10 +21,12 @@ typedef struct _heap{
  *
  * i.e. comparer(2, 5) would return 1 if we want a minheap of integers
  *
- * heap_init will build a heap from the values in the items array,
- * or create an empty heap of size 16 if items is NULL
+ * heap_init will create an empty heap of default size 16
+ * heap_init_with_items will create a heap from the items array
  */
-void heap_init(heap* h, int(*comparer)(const void *, const void *), void** items, int item_count);
+void heap_init(heap* h, int(*comparer)(const void *, const void *));
+
+void heap_init_with_items(heap* h, int(*comparer)(const void *, const void *), void** items, int item_count);
 
 
 void heap_insert(heap* h);
