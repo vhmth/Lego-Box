@@ -10,8 +10,19 @@
 #ifndef HASH_TABLE_H__
 #define HASH_TABLE_H__
 
-typedef struct _hashtable_t {
+// the node structure for elements in the
+// hash table
+typedef struct _node_t {
+    // the key and value
+    char *key;
+    void *value;
 
+    // the next item
+    node_t *next;
+} node_t;
+
+// the hash table data structure
+typedef struct _hashtable_t {
     // the maximum load factor
     // defaults to 0.7 with init
     float alpha;
