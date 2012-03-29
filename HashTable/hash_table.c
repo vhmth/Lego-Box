@@ -8,6 +8,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "hash_function.c"
 #include "hash_table.h"
@@ -133,4 +134,39 @@ void hashtable_insert(hashtable_t *h, char *key, void *value){
     // load factor
     (h->numItems)++;
     h->alpha = (float)h->numItems/(h->capacity);
+}
+
+
+
+/*  O(1) OPERATION
+ *  --------------
+ *  Finds the void pointer value associated with the key
+ *  parameter and returns it. If either of the parameters
+ *  are NULL, this function returns a NULL-pointer. If the
+ *  key is not in h, this function again returns a NULL-pointer.
+ */
+
+void *hashtable_find(hashtable_t *h, char *key){
+
+    // NULL-check the parameters
+    if(!h || !(h->table) | !key)
+        return NULL;
+
+    // get the index from the hash function
+    unsigned int index = SuperFastHash(key, h->capacity) % h->capacity;
+
+    // find the value
+    node_t *stepper = h->table[index];
+    while (stepper){
+        // if this is the node associated with the
+        // key, return its value
+        if (!strcmp(key, stepper->key))
+            return stepper->value;
+
+        // traverse
+        stepper = stepper->next;
+    }
+
+    // couldn't find the key in this table
+    return NULL;
 }
