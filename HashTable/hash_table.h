@@ -18,7 +18,7 @@ typedef struct _node_t {
     void *value;
 
     // the next item
-    node_t *next;
+    struct _node_t *next;
 } node_t;
 
 // the hash table data structure
