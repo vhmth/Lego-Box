@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+/*  O(1) OPERATION
+ *  --------------
+ *  Swaps the values at the given indices
+ */
 void swap_positions(heap* h, int pos1, int pos2){
     //printf("swapping %d with %d\n", *(int*)h->items[pos1], *(int*)h->items[pos2]);
     void* temp = h->items[pos1];
@@ -10,6 +13,11 @@ void swap_positions(heap* h, int pos1, int pos2){
     h->items[pos2] = temp;
 }
 
+/*  O(LOG(N)) OPERATION
+ *  --------------
+ *  Sifts the value at 'index' upward to position
+ *  such that the heap property is maintained
+ */
 void heapify_up(heap* h, int index){
     
     // find index of the parent
@@ -30,6 +38,11 @@ void heapify_up(heap* h, int index){
     
 }
 
+/*  O(LOG(N)) OPERATION
+ *  --------------
+ *  Sifts the value at 'index' downward to position
+ *  such that the heap property is maintained
+ */
 void heapify_down(heap* h, int index){
 
     // find the indices of the current node's children
@@ -85,7 +98,10 @@ void heapify_down(heap* h, int index){
     
 }
 
-// Build a heap using the items array
+/*  O(N) OPERATION
+ *  --------------
+ *  Builds a heap using the items array
+ */
 void build_heap(heap* h){
     
     // going from the bottom up, sift
@@ -96,6 +112,10 @@ void build_heap(heap* h){
     }
 }
 
+/*  O(1) OPERATION
+ *  --------------
+ *  Initializes a heap of size 0, capacity 16
+ */
 void heap_init(heap* h, int(*comparer)(const void *, const void *)){
     
     // Set the compare function
@@ -103,7 +123,7 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *)){
     
     // Give size and capacity valid values
     h->size = 0;
-    h->capacity = 4;
+    h->capacity = 16;
     
     // Allocate memory for the items array
     h->items = malloc(h->capacity * sizeof(void*));
@@ -116,6 +136,10 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *)){
     }
 }
 
+/*  O(N) OPERATION
+ *  --------------
+ *  Initializes a heap, and builds it using the items array
+ */
 void heap_init_with_items(heap* h, int(*compare)(const void *, const void *), void** items, int item_count){
     
     // Set the compare function
@@ -123,7 +147,7 @@ void heap_init_with_items(heap* h, int(*compare)(const void *, const void *), vo
     
     // Give size and capacity valid values
     h->size = item_count;
-    h->capacity = 4;
+    h->capacity = 16;
     
     // make sure we have enough space for all the items
     while(h->capacity < item_count) h->capacity*=2;
@@ -144,6 +168,11 @@ void heap_init_with_items(heap* h, int(*compare)(const void *, const void *), vo
     }
 }
 
+/*  O(N) OPERATION
+ *  --------------
+ *  Doubles the size of the items array,
+ *  preserving the values it already holds
+ */
 void heap_resize(heap* h){
     
     // double the capacity
@@ -153,6 +182,10 @@ void heap_resize(heap* h){
     h->items = realloc(h->items, h->capacity * sizeof(void*));
 }
 
+/*  O(LOG(N)) OPERATION
+ *  --------------
+ *  Inserts 'item' into the heap
+ */
 void heap_insert(heap* h, void* item){
     
     // if we've ran out of space in our items array
@@ -169,10 +202,18 @@ void heap_insert(heap* h, void* item){
         
 }
 
+/*  O(1) OPERATION
+ *  --------------
+ *  Returns the topmost item in the heap
+ */
 void* heap_peek(heap* h){
     return h->items[0];
 }
 
+/*  O(1) OPERATION
+ *  --------------
+ *  Returns and removes the topmost item in the heap
+ */
 void* heap_remove(heap* h){
     
     // if there's nothing in the heap, return NULL
@@ -193,14 +234,26 @@ void* heap_remove(heap* h){
     return top;
 }
 
+/*  O(1) OPERATION
+ *  --------------
+ *  Returns the size of the heap
+ */
 int heap_size(heap* h){
     return h->size;
 }
 
+/*  O(1) OPERATION
+ *  --------------
+ *  Deallocates all the memory the heap allocated
+ */
 void heap_destroy(heap* h){
     free(h->items);
 }
 
+/*  O(N) OPERATION
+ *  --------------
+ *  Prints the values in the heap, ASSUMING THEY ARE INTEGERS
+ */
 void heap_print(heap* h){
     int i;
     int nodes_for_level = 1;
