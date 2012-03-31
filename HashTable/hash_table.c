@@ -7,6 +7,7 @@
  *  Description: Implementation file for a hash table.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -34,19 +35,19 @@ void hashtable_init(hashtable_t *h){
 
     // the capacity is defaulted to 32
     h->capacity = 32;
-    h->table = (node_t **)malloc(32*sizeof(node_t *));
+    h->table = (node_t **)malloc((h->capacity)*sizeof(node_t *));
 
     // NULL all the table pointers
     int i;
-    for (i = 0; i < 32; i++)
+    for (i = 0; i < h->capacity; i++)
         h->table[i] = NULL;
     h->numItems = 0;
 }
 
 
 
-/*  O(1) OPERATION
- *  --------------
+/*  O(1) OPERATION AMORTIZED
+ *  ------------------------
  *  Inserts an item into the hash table. If any of the parameters
  *  are NULL or h has not been initialized, this function does
  *  nothing.
@@ -94,9 +95,14 @@ void hashtable_insert(hashtable_t *h, char *key, void *value){
 
         // clean up the memory and resize
         h->capacity *= 2;
-        h->table = realloc(h->table, h->capacity);
+        free(h->table);
+        h->table = (node_t **)malloc((h->capacity)*sizeof(node_t *));
         h->numItems = 0;
         h->alpha = 0;
+
+        // NULL all the pointers
+        for (i = 0; i < h->capacity; i++)
+            h->table[i] = NULL;
 
         // rehash the items
         for (i = 0; i < size; i++)
@@ -116,18 +122,16 @@ void hashtable_insert(hashtable_t *h, char *key, void *value){
         (h->table[index])->value = value;
         (h->table[index])->next = NULL;
     } else {
-        // collision occurred, so append to the chain
+        // collision occurred, so prepend to the chain
 
-        // traverse to end
-        node_t *stepper = h->table[index];
-        while (stepper->next)
-            stepper = stepper->next;
+        // make the new head node
+        node_t *tmp = (node_t *)malloc(sizeof(node_t));
+        tmp->value = value;
+        tmp->key = key;
+        tmp->next = h->table[index];
 
-        // append
-        stepper->next = (node_t *)malloc(sizeof(node_t));
-        stepper->next->key = key;
-        stepper->next->value = value;
-        stepper->next->next = NULL;
+        // make it the head
+        h->table[index] = tmp;
     }
 
     // update the number of elements and
@@ -193,7 +197,7 @@ void hashtable_remove(hashtable_t *h, char *key){
     node_t *stepper = h->table[index];
 
     // if it's the first item
-    if (!strcmp(stepper->key, key)){
+    if (!strcmp(key, stepper->key)){
         h->table[index] = stepper->next;
 
         // free this node
@@ -211,7 +215,7 @@ void hashtable_remove(hashtable_t *h, char *key){
                 stepper->next = stepper->next->next;
 
                 // free the next node
-                free(stepper->next);
+                free(tmp);
 
                 // update the number of items
                 (h->numItems)--;
@@ -344,6 +348,9 @@ float hashtable_loadfactor(hashtable_t *h){
     // NULL-check the parameter
     if (!h)
         return 0;
+
+    // update the load factor (safety procedure)
+    h->alpha = (float)h->numItems/(h->capacity);
 
     return h->alpha;
 }
