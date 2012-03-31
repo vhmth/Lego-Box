@@ -28,8 +28,9 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *));
 
 void heap_init_with_items(heap* h, int(*comparer)(const void *, const void *), void** items, int item_count);
 
+void heap_resize(heap* h);
 
-void heap_insert(heap* h);
+void heap_insert(heap* h, void* item);
 
 /* Only allowing access to the "top" item on the heap.
  * In most cases this would correspond to the minimum
