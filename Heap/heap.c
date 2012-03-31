@@ -129,6 +129,30 @@ void heap_init_with_items(heap* h, int(*compare)(const void *, const void *), vo
     }
 }
 
+void heap_resize(heap* h){
+    
+    // double the capacity
+    h->capacity *= 2;
+    
+    // allocate more memory for the items array
+    h->items = realloc(h->items, h->capacity * sizeof(void*));
+}
+
+void heap_insert(heap* h, void* item){
+    
+    // if we've ran out of space in our items array
+    // double the size of it
+    if(h->size == h->capacity) heap_resize(h);
+    
+    // increment size
+    h->size++;
+    
+    // place item in the last slot of the array,
+    // then sift it upward into its proper position
+    h->items[h->size-1] = item;
+    heapify_up(h, h->size-1);
+        
+}
 
 void* heap_peek(heap* h){
     return h->items[0];
