@@ -12,6 +12,21 @@ void swap_positions(heap* h, int pos1, int pos2){
 
 void heapify_up(heap* h, int index){
     
+    // find index of the parent
+    unsigned int parent_index = (index-1)/2;
+    
+    // get pointers to parent and child
+    void* parent = h->items[parent_index];
+    void* child = h->items[index];
+    
+    // if the child is out of place,
+    // swap it with the parent
+    if(h->compare(child, parent)){
+        swap_positions(h, parent_index, index);
+        heapify_up(h, parent_index);
+    }
+    
+    // otherwise, everything is right in the world
     
 }
 
@@ -88,7 +103,7 @@ void heap_init(heap* h, int(*comparer)(const void *, const void *)){
     
     // Give size and capacity valid values
     h->size = 0;
-    h->capacity = 16;
+    h->capacity = 4;
     
     // Allocate memory for the items array
     h->items = malloc(h->capacity * sizeof(void*));
@@ -108,7 +123,7 @@ void heap_init_with_items(heap* h, int(*compare)(const void *, const void *), vo
     
     // Give size and capacity valid values
     h->size = item_count;
-    h->capacity = 16;
+    h->capacity = 4;
     
     // make sure we have enough space for all the items
     while(h->capacity < item_count) h->capacity*=2;

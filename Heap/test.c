@@ -45,6 +45,12 @@ int main(){
     }
     heap_print(&h);
     
+    // reinsert things one at a time
+    for(i=0; i<13; i++){
+        heap_insert(&h, items[i]);
+    }
+    heap_print(&h);
+    
     heap_destroy(&h);
 
 	return 0;
