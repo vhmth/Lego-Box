@@ -1,10 +1,4 @@
-all: testFunction testHashTable
-
-testFunction: testFunction.o
-	gcc -g -Wall testFunction.o -o testFunction
-
-testFunction.o: testFunction.c
-	gcc -g -Wall -c testFunction.c -o testFunction.o
+all: testHashTable
 
 testHashTable: testHashTable.o hashTable.o
 	gcc -g -Wall testHashTable.o hashTable.o -o testHashTable
@@ -16,4 +10,4 @@ hashTable.o: hash_table.c hash_table.h
 	gcc -g -Wall -c hash_table.c -o hashTable.o
 
 clean:
-	rm -rf *.o testFunction testHashTable
+	rm -rf *.o testHashTable

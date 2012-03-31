@@ -69,7 +69,7 @@ int main() {
     printf("hashtable_find(key 1): %s\n", (char *)hashtable_find(&h, "key 1"));
     printf("num elems: %d\n", hashtable_numelems(&h));
 
-    // free up the queue's memory
+    // free up the hash table's memory
     hashtable_destroy(&h);
 
     return 0;

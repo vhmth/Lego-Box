@@ -1,0 +1,5 @@
+This is a hash table that allows you to insert, find and remove items in/into the hash table. Additionally, one may clear the table, get its capacity, number of elements and its load factor. To use, create a hashtable_t typed variable, pass that variable (as a pointer) into hashtable_init and then do as you wish with it. Before your hashtable_t variable leaves scope of its function of intended use, call hashtable_destroy on it to free up any memory it is associated with. Please read through hash_table.c for more in-depth summaries of each function.
+
+To Test:
+
+To test the hash table, I have provided a make file that makes this easy. Simply type 'make' in terminal and run the executable 'testHashTable'. Everything 'testHashTable' tests is defined/implemented in 'test.c'.
