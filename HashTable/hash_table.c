@@ -95,8 +95,7 @@ void hashtable_insert(hashtable_t *h, char *key, void *value){
 
         // clean up the memory and resize
         h->capacity *= 2;
-        free(h->table);
-        h->table = (node_t **)malloc((h->capacity)*sizeof(node_t *));
+        h->table = realloc(h->table, h->capacity*sizeof(node_t *));
         h->numItems = 0;
         h->alpha = 0;
 
