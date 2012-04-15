@@ -1,0 +1,8 @@
+This is a Trie data structure that supports key/value lookups for keys that are strings containing characters a-z (and the null character for obvious reasons). Note that keys are not case sensitive e.g "dog" and "DOG" will will be treated as the same key value.
+
+To use a Trie, allocate space for a trie data type, and pass its address into trie_init, thus creating an empty trie. 
+
+trie_get_value will return the value for the specified key.
+trie_set_value will set the value for the specified key. If there already existed a value for that key, it will be overwritten.
+
+When you are done with the Trie, call trie_destroy to clear up memory that the Trie has allocated.
